@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 
 @RunWith(SpringRunner.class)
@@ -31,5 +32,19 @@ public class BasicControllerIT {
         return LOCAL_HOST + port + uri;
     }
 
+    @Test
+    public void welcomeWithObject() throws Exception {
+        ResponseEntity<String> response = template.getForEntity(createURL("/welcome-with-object"), String.class);
 
+        assertThat(response.getBody(), containsString("Hello World"));
+    }
+
+    @Test
+    public void welcomeWithParameter() throws Exception {
+        ResponseEntity<String> response =
+                template.getForEntity(createURL("/welcome-with-parameter/name/Buddy"), String.class);
+
+        assertThat(response.getBody(),
+                containsString("Hello World, Buddy"));
+    }
 }
