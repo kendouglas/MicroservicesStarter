@@ -34,5 +34,4 @@ public class BasicControllerTest {
                     .andExpect(content().string(containsString("Hello World")));
     }
 
-
 }
